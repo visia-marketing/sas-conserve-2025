@@ -7477,10 +7477,16 @@ a, button, .button, [type=submit] {
 }
 .main-footer .footer-site-description {
   color: #002B49;
-  font-size: 4rem;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 1.88;
+  line-height: 2.8;
+}
+@media print, screen and (min-width: 40em) {
+  .main-footer .footer-site-description {
+    font-size: 4rem;
+    line-height: 1.88;
+  }
 }
 .main-footer .footer-menu {
   list-style: none;
@@ -7559,23 +7565,14 @@ a, button, .button, [type=submit] {
 .main-footer .footer-copyright ul li {
   font-size: 14px;
 }
-.main-footer .footer-tagline {
+.main-footer .footer-bottom {
   display: block;
   align-items: center;
-  font-size: 30px;
-  font-weight: 800;
-  margin-top: 50px;
-  text-align: center;
-  width: 100%;
+  border-top: 1px solid rgba(0, 43, 73, 0.4);
 }
 @media print, screen and (min-width: 40em) {
-  .main-footer .footer-tagline {
-    font-size: 50px;
-  }
-}
-@media screen and (min-width: 80em) {
-  .main-footer .footer-tagline {
-    font-size: 90px;
+  .main-footer .footer-bottom {
+    margin-top: 7rem;
   }
 }
 
