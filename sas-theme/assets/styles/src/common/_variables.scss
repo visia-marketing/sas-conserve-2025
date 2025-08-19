@@ -937,12 +937,13 @@ $topbar-unstack-breakpoint: medium;
 // 55. Xy Grid
 // -----------
 
-$xy-grid: true;
-$grid-container: $global-width;
-$grid-columns: 12;
-$grid-margin-gutters: (
-  small: 20px,
-  medium: 30px
-);
-$grid-padding-gutters: $grid-margin-gutters;
-$block-grid-max: 8;
+$xy-grid: false;
+// $grid-container: $global-width;
+// $grid-columns: 12;
+// $grid-margin-gutters: (
+//   small: 20px,
+//   medium: 30px
+// );
+// $grid-padding-gutters: $grid-margin-gutters;
+// $block-grid-max: 8;
+

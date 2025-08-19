@@ -10,8 +10,8 @@
 
 
           <div class="case-study--header" style="background-image: url(<?php echo get_the_post_thumbnail_url( get_the_ID(), 'large');  ?>);">
-            <div class="row columns">
-              <div class="small-12 medium-12">
+            <div class="row">
+              <div class="small-12 medium-12 columns">
 
                   <div class="case-study--header-content">
                     <h1 class="case-study--title"><?php $title = get_the_title(); echo $title; ?></h1>
@@ -55,9 +55,15 @@
             <div class="row case-study--overview">
               <div class="small-12 columns">
                 <?php echo $fields['overview'];?>
+
+                <?php if( $fields['files']): ?>
+                  <a href="<?php echo $fields['files']['url'];?>" class="button case-study-download" target="_blank">Download PDF</a>
+                <?php endif; ?>
+
               </div>
             </div>
           <?php endif; ?>
+
           
           <?php if( array_key_exists('gallery', $fields) ): ?>
             <?php if( is_array($fields['gallery']) && count($fields['gallery']) > 0 ): ?>
@@ -69,8 +75,10 @@
             <?php endif; ?>
           <?php endif; ?>
 
-
-          <?php get_template_part('flexible/section_testimonial_slider', '', array('testimonials' => $fields['testimonials']) ); ?>
+          <?php if( $fields['testimonials']): ?>
+            <?php get_template_part('flexible/section_testimonial_slider', '', array('testimonials' => $fields['testimonials']) ); ?>
+          <?php endif; ?>
+         
           
 
           </div>

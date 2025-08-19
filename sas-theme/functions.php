@@ -272,3 +272,12 @@ function custom_login_logo_url() {
   return home_url(); // Links to your site's homepage
 }
 add_filter('login_headerurl', 'custom_login_logo_url');
+
+
+// alter case-study archive query to show 18 posts per page
+function custom_case_study_archive_query($query) {
+    if (is_post_type_archive('case-study') && $query->is_main_query()) {
+        $query->set('posts_per_page', 21);
+    }
+}
+add_action('pre_get_posts', 'custom_case_study_archive_query');

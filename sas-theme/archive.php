@@ -36,7 +36,7 @@
       <?php endif; ?>
 
       <?php while (have_posts()) : the_post(); ?>
-        <div class=" small-12 medium-4 columns">
+        <div class=" small-12 medium-4 columns <?php echo get_post_type(); ?>-card ">
             <div class="content content-cards" data-equalizer-watch>
 
                 <div class="card-image">
@@ -64,8 +64,14 @@
         </div>
       <?php endwhile; ?>
 
-      <?php the_posts_navigation(); ?>
+      
 
+    </div>
+
+    <div class="row">
+      <div class="small-12 column">
+        <?php the_posts_navigation(); ?>
+      </div>
     </div>
   </section>
 
