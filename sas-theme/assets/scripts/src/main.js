@@ -83,7 +83,23 @@ var SimpleLightbox = require('simple-lightbox');
         }
         );
 
-
+        document.addEventListener('DOMContentLoaded', function(){
+          const mainImg = document.getElementById('gallery-main-img');
+          const thumbs = document.querySelectorAll('.product-gallery__thumbs .thumb');
+        
+          if(mainImg && thumbs.length){
+            thumbs.forEach(thumb => {
+              thumb.addEventListener('click', function(){
+                const newSrc = this.getAttribute('data-img');
+                if(newSrc){
+                  mainImg.src = newSrc;
+                  thumbs.forEach(t => t.classList.remove('active'));
+                  this.classList.add('active');
+                }
+              });
+            });
+          }
+        });
         
 
 
