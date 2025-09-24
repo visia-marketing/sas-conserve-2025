@@ -23,7 +23,7 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
-            ./wp-content/themes/mytheme/ \
+            ./wp-content/themes/sas-theme/ \
             ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
 
       - name: Cleanup
@@ -45,7 +45,7 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no" \
-            ./wp-content/themes/mytheme/ \
+            ./wp-content/themes/sas-theme/ \
             ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:${{ secrets.KINSTA_LIVE_PATH }}/
 
       - name: Cleanup
