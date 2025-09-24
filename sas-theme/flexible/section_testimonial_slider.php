@@ -3,7 +3,7 @@ $testimonials = get_sub_field('testimonials');
 
 
 
-if( $args['testimonials']){
+if( array_key_exists('testimonials', $args) ){
     $testimonials = $args['testimonials'];
     $class = "case-study--testimonial-slider";
     $slider_id =  uniqid();

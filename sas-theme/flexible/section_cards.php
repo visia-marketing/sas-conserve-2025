@@ -60,7 +60,7 @@ switch ($per_row) {
         
             <p class="card-p">
                 <?php if( $card['post_object_tf'] ): ?>
-                    <?php if( $card['custom_excerpt_tf'] ): ?>
+                    <?php if( !$card['custom_excerpt_tf'] ): ?>
                         <?php echo get_the_excerpt($card['case_study_id']); ?>
                     <?php else: ?>
                         <?php echo $card['card_description']; ?>
