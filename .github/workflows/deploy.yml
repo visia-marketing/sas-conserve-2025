@@ -15,20 +15,31 @@ jobs:
       
       - name: Deploy Theme to Staging
         run: |
+          # Write the private key to a temporary file
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           
-          # Debug: Check directory structure
-          echo "=== Checking available directories ==="
-          ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }} "pwd && ls -la"
+          # Create exclusion file for rsync
+          cat > .rsync-exclude << EOF
+          .git/
+          .github/
+          .gitignore
+          README.md
+          private_key
+          .rsync-exclude
+          node_modules/
+          .env*
+          *.log
+          EOF
           
-          echo "=== Looking for wp-content ==="
-          ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }} "find . -name 'wp-content' -type d"
+          # Use rsync to deploy only the theme folder contents (avoiding double nesting)
+          rsync -avz --delete --mkpath \
+            --exclude-from='.rsync-exclude' \
+            -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
+            ./uavionix-theme/ ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
           
-          # Try syncing to themes directory (adjust path as needed based on debug output)
-          rsync -avz --delete --exclude='.git/' --exclude='.github/' --exclude='README.md' -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" ./uavionix-theme/ ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:public/wp-content/themes/uavionix-theme/
-          
-          rm -f private_key
+          # Clean up
+          rm -f private_key .rsync-exclude
 
   deploy-live:
     if: github.ref == 'refs/heads/main'
@@ -39,9 +50,28 @@ jobs:
       
       - name: Deploy Theme to Live
         run: |
+          # Write the private key to a temporary file
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           
-          rsync -avz --delete --exclude='.git/' --exclude='.github/' --exclude='README.md' -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no" ./uavionix-theme/ ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:public/wp-content/themes/uavionix-theme/
+          # Create exclusion file for rsync
+          cat > .rsync-exclude << EOF
+          .git/
+          .github/
+          .gitignore
+          README.md
+          private_key
+          .rsync-exclude
+          node_modules/
+          .env*
+          *.log
+          EOF
           
-          rm -f private_key
+          # Use rsync to deploy only the theme folder contents (avoiding double nesting)
+          rsync -avz --delete --mkpath \
+            --exclude-from='.rsync-exclude' \
+            -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no" \
+            ./uavionix-theme/ ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:${{ secrets.KINSTA_LIVE_PATH }}/
+          
+          # Clean up
+          rm -f private_key .rsync-exclude
