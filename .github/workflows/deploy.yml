@@ -19,11 +19,11 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > private_key
           chmod 600 private_key
 
-      - name: Deploy Theme to Staging
+      - name: Deploy to Staging
         run: |
           rsync -az --delete \
             -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
-            ./wp-content/themes/sas-theme/ \
+            ./ \
             ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
 
       - name: Cleanup
@@ -41,11 +41,11 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > private_key
           chmod 600 private_key
 
-      - name: Deploy Theme to Live
+      - name: Deploy to Live
         run: |
           rsync -az --delete \
             -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no" \
-            ./wp-content/themes/sas-theme/ \
+            ./ \
             ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:${{ secrets.KINSTA_LIVE_PATH }}/
 
       - name: Cleanup
