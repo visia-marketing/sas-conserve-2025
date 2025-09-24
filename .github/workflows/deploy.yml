@@ -22,9 +22,10 @@ jobs:
       - name: Deploy to Staging
         run: |
           rsync -az --delete \
-            -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
-            ./ \
-            ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
+          -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
+          ./ \
+          ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
+
 
       - name: Cleanup
         run: rm private_key
