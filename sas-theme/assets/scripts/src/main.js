@@ -83,7 +83,6 @@ var SimpleLightbox = require('simple-lightbox');
         }
         );
 
-
         document.addEventListener('DOMContentLoaded', function(){
           const mainImg = document.getElementById('gallery-main-img');
           const thumbs = document.querySelectorAll('.product-gallery__thumbs .thumb');
@@ -101,6 +100,12 @@ var SimpleLightbox = require('simple-lightbox');
             });
           }
         });
+        
+
+
+
+
+
 
 
       }
