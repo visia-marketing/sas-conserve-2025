@@ -1,0 +1,78 @@
+name: Deploy WordPress Theme to Kinsta
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy Theme to Staging
+        run: |
+          # Write the private key to a temporary file
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          
+          # Create exclusion file for rsync
+          cat > .rsync-exclude << EOF
+          .git/
+          .github/
+          .gitignore
+          README.md
+          private_key
+          .rsync-exclude
+          node_modules/
+          .env*
+          *.log
+          EOF
+          
+          # Use rsync to deploy only the theme folder contents (avoiding double nesting)
+          rsync -az --delete \
+          -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no" \
+          ./ \
+          ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}
+
+          
+          # Clean up
+          rm -f private_key .rsync-exclude
+
+  deploy-live:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy Theme to Live
+        run: |
+          # Write the private key to a temporary file
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          
+          # Create exclusion file for rsync
+          cat > .rsync-exclude << EOF
+          .git/
+          .github/
+          .gitignore
+          README.md
+          private_key
+          .rsync-exclude
+          node_modules/
+          .env*
+          *.log
+          EOF
+          
+          # Use rsync to deploy only the theme folder contents (avoiding double nesting)
+          rsync -az --delete \
+          -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no" \
+          ./ \
+          ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:${{ secrets.KINSTA_LIVE_PATH }}
+          
+          # Clean up
+          rm -f private_key .rsync-exclude

@@ -277,6 +277,9 @@ select {
   max-width: none !important;
 }
 
+[data-whatinput=mouse] button {
+  outline: 0;
+}
 button {
   padding: 0;
   -webkit-appearance: none;
@@ -287,9 +290,6 @@ button {
   background: transparent;
   line-height: 1;
   cursor: auto;
-}
-[data-whatinput=mouse] button {
-  outline: 0;
 }
 
 pre {
@@ -6021,7 +6021,6 @@ html.is-reveal-open body {
   float: left;
   height: 100%;
   min-height: 1px;
-  display: none;
 }
 [dir=rtl] .slick-slide {
   float: right;
@@ -6030,6 +6029,9 @@ html.is-reveal-open body {
   display: block;
 }
 .slick-slide.slick-loading img {
+  display: none;
+}
+.slick-slide {
   display: none;
 }
 .slick-slide.dragging img {
@@ -6389,15 +6391,14 @@ a, button, .button, [type=submit] {
   width: 8px;
 }
 
+.gform_wrapper.gravity-theme .gform_required_legend {
+  display: none;
+}
+.gform_wrapper.gravity-theme .gform_required_legend {
+  display: none;
+}
 .gform_wrapper.gravity-theme {
   /* Make input fields transparent */
-  /* Hide labels */
-}
-.gform_wrapper.gravity-theme .gform_required_legend {
-  display: none;
-}
-.gform_wrapper.gravity-theme .gform_required_legend {
-  display: none;
 }
 .gform_wrapper.gravity-theme .gfield input[type=text],
 .gform_wrapper.gravity-theme .gfield input[type=email],
@@ -6433,6 +6434,9 @@ a, button, .button, [type=submit] {
 .gform_wrapper.gravity-theme .gfield select::placeholder {
   font-size: 16px;
   opacity: 1;
+}
+.gform_wrapper.gravity-theme {
+  /* Hide labels */
 }
 .gform_wrapper.gravity-theme .gfield--type-checkbox {
   margin-top: 12px;
@@ -6763,13 +6767,15 @@ a, button, .button, [type=submit] {
 }
 .main-search .main-search-bar .main-search-form form {
   padding: 0;
-  display: flex;
-  align-items: center;
 }
 @media print, screen and (min-width: 40em) {
   .main-search .main-search-bar .main-search-form form {
     padding: 0.5rem;
   }
+}
+.main-search .main-search-bar .main-search-form form {
+  display: flex;
+  align-items: center;
 }
 .main-search .main-search-bar .main-search-form form .is-screen-reader-text {
   display: none;
@@ -6979,24 +6985,6 @@ a, button, .button, [type=submit] {
   position: relative;
   width: 100%;
   z-index: 9;
-  /*
-  .flex {
-    align-items: center;
-    justify-content: space-between;
-    flex: 0 1 0;
-    height: 100%;
-  }
-
-  .flex-cell {
-    height: 100%;
-
-    &.store-navigation-wrapper {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-  }
-  */
 }
 @media print, screen and (min-width: 64em) {
   .main-header {
@@ -7029,6 +7017,26 @@ a, button, .button, [type=submit] {
 .main-header .menu-icon-column .menu-icon:hover {
   background-color: transparent;
   color: #86AB3C;
+}
+.main-header {
+  /*
+  .flex {
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 1 0;
+    height: 100%;
+  }
+
+  .flex-cell {
+    height: 100%;
+
+    &.store-navigation-wrapper {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+  }
+  */
 }
 .main-header .main-logo {
   display: flex;
@@ -7924,10 +7932,12 @@ body#tinymce {
 
 .wc-slider {
   /* the slides */
-  /* the parent */
 }
 .wc-slider .slick-slide {
   margin: 10px;
+}
+.wc-slider {
+  /* the parent */
 }
 .wc-slider .slick-list {
   margin: -10px;
